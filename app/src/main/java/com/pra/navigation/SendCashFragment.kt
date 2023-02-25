@@ -47,11 +47,14 @@ class SendCashFragment : Fragment(R.layout.fragment_send_cash) {
         }
 
         mBinding?.btnCancel?.setOnClickListener {
-            Toast.makeText(activity, "Cancel ", Toast.LENGTH_LONG).show()
+
+                findNavController().popBackStack(R.id.homeFragment, true)
+
         }
 
         mBinding?.btnDone?.setOnClickListener {
-            Toast.makeText(activity, "Done ", Toast.LENGTH_LONG).show()
+            val action = SendCashFragmentDirections.actionSendCashFragmentToHomeFragment()
+            findNavController().navigate(action)
         }
 
 
