@@ -25,12 +25,7 @@ class ViewTransactionFragment : Fragment(R.layout.fragment_view_transaction) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mBinding?.btnTest?.setOnClickListener {
-            val action =
-                ViewTransactionFragmentDirections.actionViewTransactionFragmentToSendCashFragment(
-                    receiverName = "Prakash Joshi")
-            findNavController().navigate(action)
-        }
+
     }
 
 

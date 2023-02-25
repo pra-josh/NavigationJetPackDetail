@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.pra.navigation.databinding.FragmentSendCashBinding
 
@@ -27,15 +28,22 @@ class SendCashFragment : Fragment(R.layout.fragment_send_cash) {
         super.onViewCreated(view, savedInstanceState)
 
         val name = args.receiverName
-        val amount = args.amount
+
 
         mBinding?.tvReceiver?.text = "Send cash to $name"
 
-        mBinding?.etAmount?.setText(amount.toString())
+        //  mBinding?.etAmount?.setText(amount.toString())
 
         mBinding?.btnSend?.setOnClickListener {
-
-            Toast.makeText(activity, "Send ", Toast.LENGTH_LONG).show()
+            val amount = mBinding?.etAmount?.text
+            if (amount?.isEmpty()!!) {
+                Toast.makeText(activity, "Amount is blank ", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val action = SendCashFragmentDirections.actionSendCashFragmentToConfirmDialogFragment(
+                name, amount.toString().toLong()
+            )
+            findNavController().navigate(action)
         }
 
         mBinding?.btnCancel?.setOnClickListener {

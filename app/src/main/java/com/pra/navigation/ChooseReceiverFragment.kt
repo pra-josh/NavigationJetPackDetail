@@ -26,20 +26,19 @@ class ChooseReceiverFragment : Fragment(R.layout.fragment_choose_receiver) {
 
         mBinding?.btnNext?.setOnClickListener {
             val receiverName = mBinding?.etReceiverName?.text.toString()
-
-            /*if (receiverName.isEmpty()) {
-
-            }*/
-
+            if (receiverName.isEmpty()) {
+                return@setOnClickListener
+            }
             val action =
                 ChooseReceiverFragmentDirections.actionChooseReceiverFragmentToSendCashFragment(
-                    receiverName,300)
+                    receiverName
+                )
             findNavController().navigate(action)
         }
 
 
         mBinding?.btnCancel?.setOnClickListener {
-
+            findNavController().popBackStack()
         }
     }
 
