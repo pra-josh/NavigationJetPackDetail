@@ -47,7 +47,6 @@ class SendCashFragment : Fragment(R.layout.fragment_send_cash) {
         }
 
         mBinding?.btnCancel?.setOnClickListener {
-
                 findNavController().popBackStack(R.id.homeFragment, true)
 
         }
