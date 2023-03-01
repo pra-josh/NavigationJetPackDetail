@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.pra.navigation.databinding.FragmentSendCashBinding
@@ -29,6 +32,11 @@ class SendCashFragment : Fragment(R.layout.fragment_send_cash) {
 
         val name = args.receiverName
 
+        mBinding?.etAmount?.setText(SampleData.defaultAmount.value.toString())
+        SampleData.defaultAmount.observe(viewLifecycleOwner, Observer {
+            mBinding?.etAmount?.setText(it.toString())
+        })
+
 
         mBinding?.tvReceiver?.text = "Send cash to $name"
 
@@ -47,7 +55,7 @@ class SendCashFragment : Fragment(R.layout.fragment_send_cash) {
         }
 
         mBinding?.btnCancel?.setOnClickListener {
-                findNavController().popBackStack(R.id.homeFragment, true)
+            findNavController().popBackStack(R.id.homeFragment, true)
 
         }
 
