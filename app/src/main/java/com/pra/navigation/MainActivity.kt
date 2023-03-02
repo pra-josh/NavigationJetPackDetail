@@ -6,10 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.pra.navigation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private lateinit var mBinding: ActivityMainBinding
+
+    private lateinit var mAppBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,31 +27,46 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        setupActionBarWithNavController(navController)
+        mAppBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.homeFragment, R.id.notificationsFragment, R.id.settingsFragment
+            ),
+        mBinding.drawerLayout
+
+        )
+
+        setupActionBarWithNavController(navController, mAppBarConfiguration)
         //mBinding.toolbar.setupWithNavController(navController)
+
+        mBinding.bottomNavGav.setupWithNavController(navController)
+
+        mBinding.navView.setupWithNavController(navController)
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration = mAppBarConfiguration) || super.onSupportNavigateUp()
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu,menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        return when(item.itemId){
-            R.id.item_about_app ->{
+        return when (item.itemId) {
+            R.id.item_about_app -> {
                 val action = NavGraphDirections.actionGlobalAboutAppFragment()
                 navController.navigate(action)
-               return true
-            }else ->{
-                return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+                return true
+            }
+            else -> {
+                return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(
+                    item
+                )
             }
         }
 
