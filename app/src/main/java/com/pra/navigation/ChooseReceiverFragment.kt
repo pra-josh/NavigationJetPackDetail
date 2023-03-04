@@ -37,8 +37,7 @@ class ChooseReceiverFragment : Fragment(R.layout.fragment_choose_receiver) {
 
             val pendinginIntent =
                 findNavController().createDeepLink().setGraph(R.navigation.nav_graph)
-                    .setDestination(R.id.sendCashFragment).setArguments(SendCashFragmentArgs(receiverName).toBundle())
-                    .createPendingIntent()
+                    .setDestination(R.id.sendCashFragment).setArguments(SendCashFragmentArgs(receiverName).toBundle()).createPendingIntent()
 
             showNotification(pendinginIntent, receiverName)
             val action =
